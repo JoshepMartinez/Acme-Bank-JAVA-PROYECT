@@ -45,3 +45,58 @@ h1, h2, h3 {
     color: var(--dorado-metalico);
     text-shadow: 0 0 1px darkgray;
 }
+
+/* ---------- MENÚ DE BOTONES ---------- */
+
+#menu {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  button {
+    background-color: var(--hueso-suave);
+    color: #444;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s, color 0.3s;
+  }
+  
+  button:hover {
+    background-color: var(--dorado-metalico);
+    color: var(--blanco-piedra);
+  }
+  
+  /* ---------- SECCIONES DE CONTENIDO ---------- */
+  
+  .contenido {
+    margin-top: 30px;
+    background: var(--degradado-azul);
+    padding: 25px;
+    border-radius: 10px;
+    color: var(--gris-texto);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .oculto {
+    display: none;
+  }
+  
+  label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: 500;
+  }
+  
+  input,
+  select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 15px;
+  }
