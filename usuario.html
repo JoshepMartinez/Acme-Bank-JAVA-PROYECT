@@ -9,6 +9,54 @@
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 </head>
 <body>
-    
+    <header>
+        <h2>Acme Bank</h2>
+    </header>
+
+    <main>
+        <h1>Bienvenidos a Acme Bank</h1>
+        <p id="frase-temporada">emporada de patos... no, temporada de conejos... ¡no! ¡Temporada de billetes en ACME Bank! Donde tus finanzas corren más rápido que el Correcaminos.</p>
+
+        <button id="btn-iniciar-sesion">Iniciar sesión</button>
+
+        <div id="window" class="window">
+            <div class="window-cont">
+                <h2>Iniciar sesión</h2>
+                <p>identificacion, numero y contraseña</p>
+                <label for="usuario">Ingrese su usuario</label><br>
+                <input type="text" id="usuario" required><br><br>
+
+                <label for="tipo">Ingrese que tipo de documento tiene</label><br>
+                <select name="tipo" id="tipo">
+                <option value="TI">tarjeta de identidad</option>
+                <option value="CC">cedula de ciudadania</option>
+                <option value="CE">cedula de extranjeria</option>
+                <option value="NIT">numero de identificacion tributaria</option>
+                <option value="RC">registro civil</option>
+                </select>
+                <br><br>
+
+                <label for="cedula">Ingrese su numero de documento de identificacion</label><br>
+                <input type="number" id="cedula" required min="1"><br><br>
+
+                <label for="contraseña-login">Contraseña</label>
+                <div class="input-container">
+                    <input type="password" id="contraseña-login" required>
+                    <button type="button" id="toggle-password-login">👁️</button>
+                </div>
+                <br><br>
+                
+                <button id="btn-confirmar">Iniciar sesión</button>
+                <br><br>
+                <button id="btn-cerrar">❌</button>
+                <p id="mensaje-login"></p>
+
+                <p>No tienes cuenta? <a href="#" id="link-a-registrar">Registrarse</a></p>
+
+                <p><a href="#" id="link-recuperar">¿Olvidaste tu contraseña?</a></p>
+                
+            </div>
+        </div>
+    </main>
 </body>
 </html>
