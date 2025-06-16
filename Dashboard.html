@@ -38,6 +38,33 @@
             <button onclick="mostrarOpcion('certificado')">Certificado bancario</button>
             <button onclick="mostrarOpcion('cerrar')">Cerrar sesión</button>
         </section>
+
+        <section id="consignacion" class="contenido oculto">
+            <h2>Consignación Electrónica</h2>
+            <p><strong>Número de cuenta:</strong> <span id="cuentaUsuario">1234567890</span></p>
+            <p><strong>Nombre del usuario:</strong> <span id="nombreUsuario">Daniel Santiago González Hernández</span></p>
+            <label for="montoConsignar">Cantidad a consignar:</label>
+            <input type="number" id="montoConsignar" min="0" step="500" required />
+            <button onclick="realizarConsignacion()">Confirmar consignación</button>
+            <div id="resumenConsignacion" class="oculto">
+              <h3>Resumen de consignación</h3>
+              <p id="detalleConsignacion"></p>
+              <button onclick="window.print()">Imprimir resumen</button>
+            </div>
+          </section>
+      
+          <section id="retiro" class="contenido oculto">
+            <h2>Retiro de Efectivo</h2>
+            <p>Cuenta: <strong id="cuentaUsuarioRetiro">---</strong></p>
+            <p>Nombre: <strong id="nombreUsuarioRetiro">---</strong></p>
+            <input type="number" id="montoRetirar" placeholder="Monto a retirar" />
+            <button onclick="realizarRetiro()">Confirmar Retiro</button>
+          
+            <div id="resumenRetiro" class="oculto">
+              <p id="detalleRetiro"></p>
+            </div>
+          </section>
+          
     </main>
 </body>
 
