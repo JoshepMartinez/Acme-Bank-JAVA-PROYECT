@@ -1,0 +1,114 @@
+
+  /* ============================
+   📱 CELULARES PEQUEÑOS (≤ 480px)
+============================ */
+@media (max-width: 480px) {
+    header {
+      padding: 15px;
+      font-size: 1rem;
+    }
+  
+    main {
+      margin: 20px 10px;
+      padding: 20px;
+    }
+  
+    .window-cont,
+    .window-regis-cont {
+      width: 90%;
+      margin-top: 20%;
+      padding: 15px;
+    }
+  
+    button {
+      width: 100%;
+      font-size: 0.9rem;
+    }
+  
+    input,
+    select {
+      width: 100%;
+      font-size: 13px;
+    }
+  
+    table,
+    th,
+    td {
+      font-size: 12px;
+      padding: 5px;
+    }
+  
+    h1, h2, h3 {
+      font-size: 1.2rem;
+      text-align: center;
+    }
+  }
+  
+  
+  /* ============================
+     📱 TABLETAS MEDIANAS (481px - 1024px)
+  ============================ */
+  @media (min-width: 481px) and (max-width: 1024px) {
+    main {
+      margin: 30px 20px;
+      padding: 25px;
+    }
+  
+    .window-cont,
+    .window-regis-cont {
+      width: 70%;
+      margin-top: 10%;
+      padding: 20px;
+    }
+  
+    button {
+      font-size: 1rem;
+      padding: 10px 16px;
+    }
+  
+    input,
+    select {
+      width: 95%;
+      font-size: 14px;
+    }
+  
+    table,
+    th,
+    td {
+      font-size: 14px;
+      padding: 8px;
+    }
+  
+    h1, h2, h3 {
+      font-size: 1.5rem;
+    }
+  }
+  
+  
+  /* ============================
+     🖥️ PANTALLAS GRANDES (≥ 1025px)
+  ============================ */
+  @media (min-width: 1025px) {
+    main {
+      max-width: 1000px;
+      margin: 40px auto;
+    }
+  
+    .window-cont,
+    .window-regis-cont {
+      width: 40%;
+    }
+  
+    input,
+    select {
+      font-size: 15px;
+    }
+  
+    table {
+      font-size: 15px;
+    }
+  
+    h1, h2, h3 {
+      font-size: 2rem;
+    }
+  }
