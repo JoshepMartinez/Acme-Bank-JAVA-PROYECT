@@ -2,19 +2,19 @@
 <html lang="es">Add commentMore actions
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Banco Virtual</title>
-  <link rel="stylesheet" href="./style.css" />
-  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Banco Virtual</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 
 </head>
 
 <body>
-  <header>
-    <h2>Acme Bank</h2>
-  </header>
+    <header>
+        <h2>Acme Bank</h2>
+    </header>
 
     <main>
         <h1>Bienvenido Acme Bank</h1>
@@ -22,11 +22,23 @@
         <h2 id="nombre-usuario"></h2>
 
         <section id="resumen">
-        <p><strong>Titular:</strong> <span id="titular">---</span></p>
-        <p><strong>Número de cuenta:</strong> <span id="numero-cuenta">---</span></p>
-        <p><strong>Saldo actual:</strong> <span id="saldo">$0</span></p>
-        <p><strong>Fecha de creación:</strong> <span id="fecha-creacion">---</span></p>
+            <p><strong>Titular:</strong> <span id="titular">---</span></p>
+            <p><strong>Número de cuenta:</strong> <span id="numero-cuenta">---</span></p>
+            <p><strong>Saldo actual:</strong> <span id="saldo">$0</span></p>
+            <p><strong>Fecha de creación:</strong> <span id="fecha-creacion">---</span></p>
+        </section>
+
+        <button id="hamburguesa" class="menu-toggle">☰</button>
+        <section id="menu">
+            <button onclick="mostrarOpcion('consignacion')">Consignación electrónica</button>
+            <button onclick="mostrarOpcion('retiro')">Retiro</button>
+            <button onclick="mostrarOpcion('extracto')">Ver extracto</button>
+            <button onclick="mostrarOpcion('resumen')">Resumen de transacciones</button>
+            <button onclick="mostrarOpcion('servicios')">Pago de servicios públicos</button>
+            <button onclick="mostrarOpcion('certificado')">Certificado bancario</button>
+            <button onclick="mostrarOpcion('cerrar')">Cerrar sesión</button>
         </section>
     </main>
 </body>
+
 </html>
