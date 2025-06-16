@@ -128,6 +128,39 @@
 
             </div>
         </div>
+        
+        <div id="window-recuperar" class="window-regis oculto">
+            <div class="window-regis-cont">
+              <h2>Recuperar contraseña</h2>
+          
+              <label for="recuperar-tipo">Tipo de documento</label>
+              <select id="recuperar-tipo">
+                <option value="TI">tarjeta de identidad</option>
+                <option value="CC">cedula de ciudadania</option>
+                <option value="CE">cedula de extranjeria</option>
+                <option value="NIT">numero de identificacion tributaria</option>
+                <option value="RC">registro civil</option>
+              </select>
+              <br>
+          
+              <label for="recuperar-cedula">Número de documento</label>
+              <input type="number" id="recuperar-cedula" required>
+          
+              <label for="recuperar-nombre">Nombre completo</label>
+              <input type="text" id="recuperar-nombre" required>
+          
+              <button id="btn-enviar-recuperacion">Validar identidad</button>
+          
+              <div id="form-cambiar-pass" class="oculto">
+                <label for="nueva-contraseña">Nueva contraseña</label>
+                <input type="password" id="nueva-contraseña" required>
+                <button id="btn-cambiar-contraseña">Actualizar contraseña</button>
+              </div>
+              <br>
+      
+              <button id="btn-cerrar-recuperar">❌</button>
+            </div>
+          </div> 
     </main>
 
     <script src="./Pagina de inicio de sesion/inicio.js"></script>
