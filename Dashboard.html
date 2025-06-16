@@ -85,8 +85,31 @@
               <button onclick="window.print()">Imprimir resumen</button>
             </div>
           </section>
-          
+          <section id="resumenTransacciones" class="contenido oculto">
+            <h2>Resumen de Transacciones</h2>
+            <table id="tablaTransacciones" border="1" cellpadding="8" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Referencia</th>
+                  <th>Tipo</th>
+                  <th>Descripción</th>
+                  <th>Valor</th>
+                </tr>
+              </thead>
+              <tbody id="cuerpoTablaTransacciones">
+                <!-- Las filas se generan aquí -->
+              </tbody>
+            </table>
+            <button onclick="window.print()">Imprimir resumen</button>
+          </section>
+      
+          <section id="cerrarSesion" class="contenido oculto">
+            <h2>Sesión finalizada</h2>
+            <p>Gracias por usar el Banco Virtual de Daniel.</p>
+            <p>¡Hasta pronto!</p>
+          </section>
     </main>
 </body>
-
+ <script src="./Dashboard.js"></script>
 </html>

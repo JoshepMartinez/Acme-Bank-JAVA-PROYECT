@@ -251,7 +251,114 @@ function realizarPagoServicio() {
     document.getElementById("resumenPagoServicio").classList.remove("oculto");
     document.getElementById("valorServicio").value = "";
   }
+
+// =============================
+// Extracto y certificado
+// =============================
+function generarExtracto() {
+    if (!usuarioActual) return console.warn("Usuario no cargado.");
+    document.getElementById("reporteNombre").textContent = usuarioActual.nombre;
+    document.getElementById("reporteCuenta").textContent = usuarioActual.numeroCuenta;
+    document.getElementById("seccionReporte").classList.remove("oculto");
   
+    // Vaciar resultados anteriores
+    document.getElementById("tablaExtracto").innerHTML = "";
+  }
+  function filtrarTransaccionesPorFecha() {
+    const anio = document.getElementById("anio").value;
+    const mes = document.getElementById("mes").value;
+    const cedula = sessionStorage.getItem("cedula");
+  
+    if (!anio || !mes) {
+      alert("Por favor, ingresa el año y el mes.");
+      return;
+    }
+  
+    const ruta = `usuarios/${cedula}/transacciones`;
+    get(ref(database, ruta)).then(snapshot => {
+      const tbody = document.getElementById("tablaExtracto");
+      tbody.innerHTML = "";
+  
+      if (!snapshot.exists()) {
+        tbody.innerHTML = "<tr><td colspan='5'>No hay transacciones.</td></tr>";
+        return;
+      }
+  
+      const datos = Object.values(snapshot.val());
+      const filtrados = datos.filter(t => {
+        const fecha = new Date(t.fecha);
+        return (
+          fecha.getFullYear() === parseInt(anio) &&
+          fecha.getMonth() + 1 === parseInt(mes)
+        );
+      });
+  
+      if (filtrados.length === 0) {
+        tbody.innerHTML = "<tr><td colspan='5'>No se encontraron transacciones para ese mes.</td></tr>";
+      } else {
+        filtrados.forEach(t => {
+          const fila = `
+            <tr>
+              <td>${t.fecha}</td>
+              <td>${t.referencia}</td>
+              <td>${t.tipo}</td>
+              <td>${t.descripcion}</td>
+              <td>$${t.valor}</td>
+            </tr>
+          `;
+          tbody.innerHTML += fila;
+        });
+      }
+    });
+  }
+  
+  
+  function mostrarCertificado() {
+    if (!usuarioActual) return alert("No se ha cargado la información.");
+    document.getElementById("titular").textContent = usuarioActual.nombre;
+    document.getElementById("certCuenta").textContent = usuarioActual.numeroCuenta;
+    document.getElementById("certSaldo").textContent = "$" + Number(usuarioActual.saldo || 0).toLocaleString();
+    document.getElementById("certFecha").textContent = usuarioActual.fechaCreacion;
+    document.getElementById("certEmision").textContent = new Date().toLocaleDateString("es-CO", {
+      day: "2-digit", month: "long", year: "numeric"
+    });
+    ocultarSecciones();
+    document.getElementById("certificado").classList.remove("oculto");
+  }
+  
+  // =============================
+  // Mostrar resumen de transacciones
+  // =============================
+  function mostrarResumenTransacciones() {
+    const tabla = document.getElementById("cuerpoTablaTransacciones");
+    const seccion = document.getElementById("resumenTransacciones");
+  
+    if (!tabla || !seccion) return console.warn("Falta el contenedor");
+  
+    tabla.innerHTML = "";
+  
+    if (!usuarioActual.transacciones || usuarioActual.transacciones.length === 0) {
+      tabla.innerHTML = `<tr><td colspan="5" style="text-align:center;">Sin movimientos registrados</td></tr>`;
+      seccion.classList.remove("oculto");
+      return;
+    }
+  
+    usuarioActual.transacciones.forEach(tx => {
+      const fila = document.createElement("tr");
+      fila.innerHTML = `
+        <td>${tx.fecha}</td>
+        <td>${tx.referencia}</td>
+        <td>${tx.tipo}</td>
+        <td>${tx.descripcion}</td>
+        <td>$${Number(tx.valor).toLocaleString()}</td>
+      `;
+      tabla.appendChild(fila);
+    });
+  
+    ocultarSecciones();
+    seccion.classList.remove("oculto");
+  }
+    
    
 
 // =============================
