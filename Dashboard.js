@@ -135,6 +135,85 @@ const firebaseConfig = {
   }
 
 // =============================
+// Funciones de operaciones bancarias
+// =============================
+function mostrarFormularioConsignacion() {
+    document.getElementById("consignacion").classList.remove("oculto");
+    document.getElementById("cuentaUsuario").textContent = usuarioActual.numeroCuenta || "---";
+    document.getElementById("nombreUsuario").textContent = usuarioActual.nombre || "---";
+  }
+  
+  function realizarConsignacion() {
+    const monto = parseFloat(document.getElementById("montoConsignar").value);
+    if (isNaN(monto) || monto <= 0) return alert("Ingrese un valor válido.");
+  
+    usuarioActual.saldo = (usuarioActual.saldo || 0) + monto;
+  
+    const tx = {
+      fecha: obtenerFechaHoy(),
+      referencia: generarReferencia(),
+      tipo: "Consignación",
+      descripcion: "Consignación electrónica",
+      valor: monto
+    };
+  
+    usuarioActual.transacciones = usuarioActual.transacciones || [];
+    usuarioActual.transacciones.push(tx);
+  
+    db.ref("usuarios/" + usuarioActual.cedula).update({
+      saldo: usuarioActual.saldo,
+      transacciones: usuarioActual.transacciones
+    });
+  
+    document.getElementById("detalleConsignacion").innerHTML = `
+      Se consignaron <strong>$${monto.toLocaleString()}</strong> a la cuenta <strong>${usuarioActual.numeroCuenta}</strong><br>
+      Fecha: ${tx.fecha} | Ref: ${tx.referencia}
+    `;
+    document.getElementById("resumenConsignacion").classList.remove("oculto");
+  
+    mostrarDatosUsuario();
+    mostrarResumenTransacciones();
+    document.getElementById("montoConsignar").value = "";
+  }
+  
+  function retirar() {
+    document.getElementById("retiro").classList.remove("oculto");
+    document.getElementById("cuentaUsuarioRetiro").textContent = usuarioActual.numeroCuenta || "---";
+    document.getElementById("nombreUsuarioRetiro").textContent = usuarioActual.nombre || "---";
+  }
+  
+  function realizarRetiro() {
+    const monto = parseFloat(document.getElementById("montoRetirar").value);
+    if (isNaN(monto) || monto <= 0) return alert("Ingrese un monto válido.");
+    if (usuarioActual.saldo < monto) return alert("Saldo insuficiente.");
+  
+    usuarioActual.saldo -= monto;
+  
+    const tx = {
+      fecha: obtenerFechaHoy(),
+      referencia: generarReferencia(),
+      tipo: "Retiro",
+      descripcion: "Retiro de efectivo",
+      valor: monto
+    };
+  
+    usuarioActual.transacciones = usuarioActual.transacciones || [];
+    usuarioActual.transacciones.push(tx);
+  
+    db.ref("usuarios/" + usuarioActual.cedula).update({
+      saldo: usuarioActual.saldo,
+      transacciones: usuarioActual.transacciones
+    });
+  
+    document.getElementById("detalleRetiro").textContent = `Retiraste $${monto.toLocaleString()} el ${tx.fecha} (Ref: ${tx.referencia})`;
+    document.getElementById("resumenRetiro").classList.remove("oculto");
+  
+    mostrarDatosUsuario();
+    mostrarResumenTransacciones();
+  }
+   
+
+// =============================
 // Menú hamburguesa
 // =============================
 const toggleBtn = document.getElementById("hamburguesa");
@@ -182,4 +261,4 @@ function generarNumeroCuenta() {
   
   function generarReferencia() {
     return "REF" + Math.floor(100000 + Math.random() * 900000);
-  }
+}
