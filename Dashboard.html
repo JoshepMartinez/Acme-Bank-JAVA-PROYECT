@@ -64,6 +64,27 @@
               <p id="detalleRetiro"></p>
             </div>
           </section>
+    
+          <section id="contenido" class="contenido oculto"></section>
+
+          <section id="servicios" class="contenido oculto">
+            <h2>Pago de Servicios Públicos</h2>
+            <label for="servicio">Tipo de servicio:</label>
+            <select id="servicio">
+              <option value="Energía">Energía</option>
+              <option value="Agua">Agua</option>
+              <option value="Gas">Gas</option>
+              <option value="Internet">Internet</option>
+            </select>
+            <label for="valorServicio">Monto a pagar:</label>
+            <input type="number" id="valorServicio" min="0" step="500" required />
+            <button onclick="realizarPagoServicio()">Confirmar pago</button>
+            <div id="resumenPagoServicio" class="oculto">
+              <h3>Resumen del Pago</h3>
+              <p id="detallePagoServicio"></p>
+              <button onclick="window.print()">Imprimir resumen</button>
+            </div>
+          </section>
           
     </main>
 </body>

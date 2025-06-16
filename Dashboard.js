@@ -211,6 +211,47 @@ function mostrarFormularioConsignacion() {
     mostrarDatosUsuario();
     mostrarResumenTransacciones();
   }
+
+  // =============================
+// Pago de Servicios
+// =============================
+function realizarPagoServicio() {
+    const tipo = document.getElementById("servicio").value;
+    const monto = parseFloat(document.getElementById("valorServicio").value);
+    if (isNaN(monto) || monto <= 0) return alert("Monto inválido.");
+    if (monto > usuarioActual.saldo) return alert("Saldo insuficiente.");
+  
+    usuarioActual.saldo -= monto;
+  
+    const tx = {
+      fecha: obtenerFechaHoy(),
+      referencia: generarReferencia(),
+      tipo: "Pago de servicios",
+      descripcion: `Pago de ${tipo}`,
+      valor: monto
+    };
+  
+    usuarioActual.transacciones = usuarioActual.transacciones || [];
+    usuarioActual.transacciones.push(tx);
+  
+    db.ref("usuarios/" + usuarioActual.cedula).update({
+      saldo: usuarioActual.saldo,
+      transacciones: usuarioActual.transacciones
+    });
+  
+    mostrarDatosUsuario();
+    mostrarResumenTransacciones();
+  
+    document.getElementById("detallePagoServicio").innerHTML = `
+      Servicio: ${tipo}<br>
+      Monto: $${monto.toLocaleString()}<br>
+      Fecha: ${tx.fecha}<br>
+      Referencia: ${tx.referencia}
+    `;
+    document.getElementById("resumenPagoServicio").classList.remove("oculto");
+    document.getElementById("valorServicio").value = "";
+  }
+  
    
 
 // =============================
