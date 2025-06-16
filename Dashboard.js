@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const nombreUsuario = sessionStorage.getItem("usuario");
     if (!nombreUsuario) {
         alert("Debe iniciar sesión.");
-        window.location.href = "html1.html";
+        window.location.href = "usuario.html";
         return;
     }
 
@@ -404,7 +404,7 @@ function mostrarDatosUsuario() {
 
 function cerrarSesion() {
     sessionStorage.removeItem("usuario");
-    window.location.href = "html1.html";
+    window.location.href = "usuario.html";
 }
 
 function generarReferencia() {
