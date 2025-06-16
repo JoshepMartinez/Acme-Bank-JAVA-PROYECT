@@ -38,6 +38,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const seccionInicio = document.getElementById('inicio');
     const seccionDashboard = document.getElementById('dashboard');
 
+    const linkRecuperar = document.getElementById("link-recuperar");
+    const ventanaRecuperar = document.getElementById("window-recuperar");
+    const ventanaLogin1 = document.getElementById("window");
+    const btnCerrarRecuperar = document.getElementById("btn-cerrar-recuperar");
+    const btnEnviarRecuperacion = document.getElementById("btn-enviar-recuperacion");
+    const btnCambiarContraseña = document.getElementById("btn-cambiar-contraseña");
+    const formCambiarPass = document.getElementById("form-cambiar-pass");
+
     btnAbrirLogin.addEventListener('click', () => {
         ventanaLogin.style.display = 'block';
         mensajeLogin.textContent = '';
@@ -229,4 +237,69 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('ciudad-regis').value = '';
         document.getElementById('contraseña-regis').value = '';
       }
+      let cedulaActualRecuperar = null;
+
+      linkRecuperar.addEventListener("click", (e) => {
+        e.preventDefault();
+        ventanaLogin1.style.display = 'none';
+        ventanaRecuperar.style.display= 'block';
+      });
+
+      btnCerrarRecuperar.addEventListener("click", () => {
+        ventanaRecuperar.style.display = 'none';
+        formCambiarPass.classList.add("oculto");
+        cedulaActualRecuperar = null;
+      });  
+
+      btnEnviarRecuperacion.addEventListener("click", () => {
+        const cedula = document.getElementById("recuperar-cedula").value.trim();
+        const tipo = document.getElementById("recuperar-tipo").value;
+        const nombre = document.getElementById("recuperar-nombre").value.trim();
+
+        if (!cedula || !tipo || !nombre) {
+        alert("Por favor complete todos los campos.");
+        return;
+        }
+
+        const refUsuario = db.ref("usuarios/" + cedula);
+        refUsuario.once("value")
+        .then(snapshot => {
+            const usuario = snapshot.val();
+
+            if (!usuario) {
+            alert("Usuario no encontrado.");
+            return;
+            }
+
+            if (usuario.tipo === tipo && usuario.nombre === nombre) {
+            cedulaActualRecuperar = cedula;
+            formCambiarPass.classList.remove("oculto");
+            } else {
+            alert("Los datos no coinciden con la base de datos.");
+            }
+        })
+        .catch(error => {
+            alert("Error al consultar Firebase: " + error.message);
+        });
+        });
+
+        btnCambiarContraseña.addEventListener("click", () => {
+            const nueva = document.getElementById("nueva-contraseña").value;
+
+            if (!nueva || !cedulaActualRecuperar) {
+            alert("Por favor ingrese una nueva contraseña.");
+            return;
+            }
+
+            db.ref(`usuarios/${cedulaActualRecuperar}/contraseña`).set(nueva)
+            .then(() => {
+                alert("Contraseña actualizada correctamente.");
+                ventanaRecuperar.classList.add("oculto");
+                formCambiarPass.classList.add("oculto");
+                cedulaActualRecuperar = null;
+            })
+            .catch(error => {
+                alert("Error al actualizar contraseña: " + error.message);
+            });
+        });
 });
