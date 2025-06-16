@@ -1,0 +1,47 @@
+:root {
+    --dorado-metalico: #D4AF37;
+    --blanco-piedra: #FFFFFF;
+    --degradado-azul: linear-gradient(to right, #00b7eb, #0087d1);
+    --hueso-suave: #F1E1B0;
+    --gris-claro-elegante: #E6E3E3;
+    --gris-texto: #333333;
+}
+
+/* ---------- ESTRUCTURA GENERAL ---------- */
+
+body {
+    background-color: var(--blanco-piedra);
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    color: var(--gris-texto);
+    background-image: url(./imagenes/Image_13_jun_2025_03_00_17_p.m..webp);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    
+}
+
+header {
+    background: var(--degradado-azul);
+    color: var(--dorado-metalico);
+    text-align: center;
+    padding: 20px;
+    text-shadow: 0 0 2px #666;
+}
+
+/* ---------- CONTENIDO PRINCIPAL ---------- */
+
+main {
+    max-width: 800px;
+    margin: 40px auto;
+    background-color: var(--gris-claro-elegante);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    color: var(--gris-texto);
+}
+
+h1, h2, h3 {
+    color: var(--dorado-metalico);
+    text-shadow: 0 0 1px darkgray;
+}
