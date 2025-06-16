@@ -20,6 +20,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const mensajeLogin = document.getElementById('mensaje-login');
     const linkRegistrarDesdeLogin = document.getElementById('link-a-registrar');
 
+    const inputUsuario = document.getElementById('usuario');
+    const inputTipo = document.getElementById('tipo');
+    const inputCedula = document.getElementById('cedula');
+    const inputContraseña = document.getElementById('contraseña');
+
+    const ventanaRegis = document.getElementById('window-regis');
+    const btnAbrirRegis = document.getElementById('btn-registrarse');
+    const btnCerrarRegistro = document.getElementById('btn-cerrar-registro');
+    const btnRegistrar = document.getElementById('registrarse');
+
     btnAbrirLogin.addEventListener('click', () => {
         ventanaLogin.style.display = 'block';
         mensajeLogin.textContent = '';
@@ -107,6 +117,61 @@ document.addEventListener('DOMContentLoaded', () => {
           .catch((error) => {
             mensajeLogin.style.color = "red";
             mensajeLogin.textContent = "Error de conexión a Firebase: " + error.message;
+          });
+      });
+
+      btnAbrirRegis.addEventListener('click', () => {
+        ventanaRegis.style.display = 'block';
+      });
+    
+      btnCerrarRegistro.addEventListener('click', () => {
+        ventanaRegis.style.display = 'none';
+        limpiarCamposRegistro();
+      });
+    
+      btnRegistrar.addEventListener('click', () => {
+        const numeroCuenta = Math.floor(1000000000 + Math.random() * 9000000000).toString();
+        const fechaCreacion = new Date().toLocaleDateString('es-CO');
+    
+        const nuevoUsuario = {
+          tipo: document.getElementById('tipo-regis').value,
+          cedula: document.getElementById('cedula-regis').value.trim(),
+          nombre: document.getElementById('usuario-regis').value.trim(),
+          genero: document.getElementById('genero-regis').value,
+          telefono: document.getElementById('telefono-regis').value.trim(),
+          correo: document.getElementById('correo-regis').value.trim(),
+          direccion: document.getElementById('direccion-regis').value.trim(),
+          ciudad: document.getElementById('ciudad-regis').value.trim(),
+          contraseña: document.getElementById('contraseña-regis').value,
+          saldo: 0,
+          numero: numeroCuenta,
+          fechaCreacion: fechaCreacion,
+          transacciones: []
+        };
+    
+        const correoValido = /^[a-zA-Z0-9._%+-]+@(gmail\.com|hotmail\.com)$/;
+        if (!correoValido.test(nuevoUsuario.correo)) {
+          alert("Solo se permiten correos @gmail.com o @hotmail.com.");
+          return;
+        }
+    
+        if (!nuevoUsuario.tipo || !nuevoUsuario.cedula || !nuevoUsuario.nombre || !nuevoUsuario.contraseña) {
+          alert("Por favor complete todos los campos requeridos.");
+          return;
+        }
+    
+        const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+        usuarios.push(nuevoUsuario);
+        localStorage.setItem('usuarios', JSON.stringify(usuarios));
+    
+        db.ref('usuarios/' + nuevoUsuario.cedula).set(nuevoUsuario)
+          .then(() => {
+            alert("Registro exitoso.");
+            ventanaRegis.style.display = 'none';
+            limpiarCamposRegistro();
+          })
+          .catch((error) => {
+            alert("Error al registrar en Firebase: " + error.message);
           });
       });
 });
