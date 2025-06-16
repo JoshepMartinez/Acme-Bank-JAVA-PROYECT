@@ -30,6 +30,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnCerrarRegistro = document.getElementById('btn-cerrar-registro');
     const btnRegistrar = document.getElementById('registrarse');
 
+    const passwordInputLogin = document.getElementById('contraseña-login');
+    const toggleButtonLogin = document.getElementById('toggle-password-login');
+    const passwordInputRegis = document.getElementById('contraseña-regis');
+    const toggleButtonRegis = document.getElementById('toggle-password-regis');
+
     btnAbrirLogin.addEventListener('click', () => {
         ventanaLogin.style.display = 'block';
         mensajeLogin.textContent = '';
@@ -173,5 +178,17 @@ document.addEventListener('DOMContentLoaded', () => {
           .catch((error) => {
             alert("Error al registrar en Firebase: " + error.message);
           });
+      });
+
+      toggleButtonLogin.addEventListener('click', () => {
+        const isPassword = passwordInputLogin.type === 'password';
+        passwordInputLogin.type = isPassword ? 'text' : 'password';
+        toggleButtonLogin.textContent = isPassword ? '🙈' : '👁️';
+      });
+    
+      toggleButtonRegis.addEventListener('click', () => {
+        const isPassword = passwordInputRegis.type === 'password';
+        passwordInputRegis.type = isPassword ? 'text' : 'password';
+        toggleButtonRegis.textContent = isPassword ? '🙈' : '👁️';
       });
 });

@@ -80,6 +80,31 @@ button:hover {
   text-shadow: 0 0 1px darkgray, 0 0 2px darkgray;
 }
 
+.input-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.input-container input {
+    width: 100%;
+    padding-right: 40px;
+    padding-left: 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.input-container button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-80%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+}
+
 input,
 select {
   width: 90%;
@@ -102,4 +127,16 @@ a:hover {
 
 .oculto {
   display: none;
+}
+
+.campo-contraseña input {
+    flex: 1;
+    padding: 5px;
+}
+
+.campo-contraseña button {
+    background-color: transparent;
+    border: none;
+    font-size: 1.2em;
+    cursor: pointer;
 }
