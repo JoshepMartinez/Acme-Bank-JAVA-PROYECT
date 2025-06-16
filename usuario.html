@@ -57,6 +57,66 @@
                 
             </div>
         </div>
+        <div id="window-regis" class="window-regis">
+            <div class="window-regis-cont">
+              <h2>Registrarse</h2>
+      
+              <label for="tipo-regis">Ingrese que tipo de documento tiene</label><br>
+              <select name="tipo-regis" id="tipo-regis">
+                <option value="TI">tarjeta de identidad</option>
+                <option value="CC">cedula de ciudadania</option>
+                <option value="CE">cedula de extranjeria</option>
+                <option value="NIT">numero de identificacion tributaria</option>
+                <option value="RC">registro civil</option>
+              </select>
+              <br><br>
+      
+              <label for="cedula-regis">Ingrese su numero de documento de identificacion</label><br>
+              <input type="number" id="cedula-regis" required min="1">
+              <br><br>
+      
+              <label for="usuario-regis">Ingrese sus nombres y apellidos</label><br>
+              <input type="text" id="usuario-regis">
+              <br><br>
+      
+              <label for="genero-regis">Ingrese su genero</label><br>
+              <select name="genero" id="genero-regis">
+                <option value="H2">Helicoptero Apache</option>
+                <option value="H">Hombre</option>
+                <option value="M">Mujer</option>
+                <option value="LGBTIQ+">LGTIQ+</option>
+              </select>
+              <br><br>
+      
+              <label for="telefono-regis">Ingrese su numero telefonico</label><br>
+              <input type="number" id="telefono-regis">
+              <br><br>
+      
+              <label for="correo-regis">Ingrese su correo electronico</label><br>
+              <input type="text" id="correo-regis">
+              <br><br>
+      
+              <label for="direccion-regis">Ingrese su direccion de resisdencia</label><br>
+              <input type="text" id="direccion-regis">
+              <br><br>
+      
+              <label for="ciudad-regis">Ingrese su ciudad de resisdencia</label><br>
+              <input type="text" id="ciudad-regis">
+              <br><br>
+      
+              <label for="contraseña-regis">Contraseña</label>
+                <div class="input-container">
+                  <input type="password" id="contraseña-regis" required>
+                  <button type="button" id="toggle-password-regis">👁️</button>
+                </div>
+              <br><br>
+      
+              <button id="registrarse" class="registrarse">Registrarse</button>
+              <br><br>
+      
+              <button id="btn-cerrar-registro">❌</button>
+            </div>
+        </div>
     </main>
 </body>
 </html>
