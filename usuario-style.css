@@ -11,9 +11,9 @@ background-color: var(--blanco-piedra);
 font-family: 'Segoe UI', sans-serif;
 margin: 0;
 color: var(--gris-claro-elegante);
-background-image: url();
+background-image: url(./imagenes/fondo.png);
 background-repeat: no-repeat;
-background-size: cover;
+background-size: 80lh;
 background-position: center;
 }
 
