@@ -90,22 +90,26 @@
         </section>
         <section id="resumenTransacciones" class="contenido oculto">
             <h2>Resumen de Transacciones</h2>
-            <table id="tablaTransacciones" border="1" cellpadding="8" cellspacing="0">
+            
+            <div class="tabla-responsiva">
+              <table id="tablaTransacciones" border="1" cellpadding="8" cellspacing="0">
                 <thead>
-                    <tr>
-                        <th>Fecha</th>
-                        <th>Referencia</th>
-                        <th>Tipo</th>
-                        <th>Descripción</th>
-                        <th>Valor</th>
-                    </tr>
+                  <tr>
+                    <th>Fecha</th>
+                    <th>Referencia</th>
+                    <th>Tipo</th>
+                    <th>Descripción</th>
+                    <th>Valor</th>
+                  </tr>
                 </thead>
                 <tbody id="cuerpoTablaTransacciones">
-                    <!-- Las filas se generan aquí -->
+                  <!-- Las filas se generan aquí -->
                 </tbody>
-            </table>
+              </table>
+            </div>
+          
             <button onclick="window.print()">Imprimir resumen</button>
-        </section>
+          </section>
 
         <section id="cerrarSesion" class="contenido oculto">
             <h2>Sesión finalizada</h2>

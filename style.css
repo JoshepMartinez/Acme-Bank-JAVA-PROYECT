@@ -269,4 +269,28 @@ table {
     padding: 8px;
     text-align: center;
   }
+
+
+/* 🌐 Tabla responsive */
+.tabla-responsiva {
+    width: 100%;
+    overflow-x: auto;
+  }
+  
+  .tabla-responsiva table {
+    width: 100%;
+    min-width: 600px; /* Puedes ajustar si necesitas más compacto */
+    border-collapse: collapse;
+  }
+  
+  @media (max-width: 480px) {
+    .tabla-responsiva table {
+      min-width: 500px;
+    }
+  
+    table th, table td {
+      font-size: 12px;
+      padding: 6px;
+    }
+  }
   
