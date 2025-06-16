@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
               localStorage.setItem("usuarios", JSON.stringify(usuarioFirebase));
               setTimeout(() => {
                 ventanaLogin.style.display = 'none';
-                window.location.href = 'html.html';
+                window.location.href = 'Dashboard.html';
               }, 1000);
               
             } else {
