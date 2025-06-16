@@ -190,3 +190,83 @@ table {
     width: 50px;
     height: 50px;
   }
+  
+  /* Botón hamburguesa oculto por defecto */
+  .menu-toggle {
+    display: none;
+    background: var(--dorado-metalico);
+    color: white;
+    border: none;
+    font-size: 24px;
+    padding: 10px;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 5px;
+  }
+  
+  /* Solo visible en móviles */
+  @media (max-width: 480px) {
+    #menu {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 15px;
+    }
+  
+    #menu.mostrar {
+      display: flex;
+    }
+  
+    .menu-toggle {
+      display: block;
+      margin: 0 auto;
+    }
+  
+    #menu button {
+      width: 100%;
+      max-width: 300px;
+    }
+  }
+  
+  
+  .oculto {
+    display: none;
+  }
+  
+  
+  #servicios {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border: 2px solid #ccc;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+    color: #444;
+  }
+  
+  .oculto {
+    display: none;
+  }
+  
+  .contenido {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #fff;
+    border: 2px solid #ccc;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .contenido table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .contenido th, .contenido td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
