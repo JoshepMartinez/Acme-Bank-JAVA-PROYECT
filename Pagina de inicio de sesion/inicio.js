@@ -35,6 +35,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const passwordInputRegis = document.getElementById('contraseña-regis');
     const toggleButtonRegis = document.getElementById('toggle-password-regis');
 
+    const seccionInicio = document.getElementById('inicio');
+    const seccionDashboard = document.getElementById('dashboard');
+
     btnAbrirLogin.addEventListener('click', () => {
         ventanaLogin.style.display = 'block';
         mensajeLogin.textContent = '';
@@ -191,4 +194,39 @@ document.addEventListener('DOMContentLoaded', () => {
         passwordInputRegis.type = isPassword ? 'text' : 'password';
         toggleButtonRegis.textContent = isPassword ? '🙈' : '👁️';
       });
+
+      const btnCerrarSesion = document.querySelector("button[onclick*='cerrar']");
+      if (btnCerrarSesion) {
+        btnCerrarSesion.addEventListener("click", () => {
+            sessionStorage.removeItem("usuario");
+            seccionDashboard.classList.add("oculto");
+            seccionInicio.classList.remove("oculto");
+        });
+      }
+
+      const usuarioSesion = sessionStorage.getItem("usuario");
+      if (usuarioSesion) {
+        seccionInicio.classList.add("oculto");
+        seccionDashboard.classList.remove("oculto");
+      }
+
+      function limpiarCamposLogin() {
+        inputUsuario.value = '';
+        inputTipo.selectedIndex = 0;
+        inputCedula.value = '';
+        inputContraseña.value = '';
+        mensajeLogin.textContent = '';
+      }
+
+      function limpiarCamposRegistro() {
+        document.getElementById('tipo-regis').selectedIndex = 0;
+        document.getElementById('cedula-regis').value = '';
+        document.getElementById('usuario-regis').value = '';
+        document.getElementById('genero-regis').selectedIndex = 0;
+        document.getElementById('telefono-regis').value = '';
+        document.getElementById('correo-regis').value = '';
+        document.getElementById('direccion-regis').value = '';
+        document.getElementById('ciudad-regis').value = '';
+        document.getElementById('contraseña-regis').value = '';
+      }
 });
