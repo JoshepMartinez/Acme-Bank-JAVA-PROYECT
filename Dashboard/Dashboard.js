@@ -20,6 +20,16 @@ let usuarioActual = null;
 let datosUsuario = null;
 let transacciones = [];
 
+// =========================
+// Función para mostrar secciones
+// =========================
+function mostrarSeccion(id) {
+    document.querySelectorAll(".contenido").forEach(seccion => {
+      seccion.classList.add("oculto");
+    });
+    document.getElementById(id).classList.remove("oculto");
+  }
+
 // =============================
 // Elementos del DOM
 // =============================
@@ -64,6 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (snapshot.exists()) {
             usuarioActual = snapshot.val();
             usuarioActual.cedula = datosUsuario.cedula;
+            sessionStorage.setItem("cedula", datosUsuario.cedula);
             mostrarDatosUsuario();
             mostrarResumenTransacciones();
         } else {
@@ -93,6 +104,7 @@ function mostrarOpcion(opcion) {
         return;
     }
 
+      
     ocultarSecciones();
 
     switch (opcion) {
@@ -103,7 +115,8 @@ function mostrarOpcion(opcion) {
             retirar();
             break;
         case 'extracto':
-            generarExtracto();
+            alert("Entró al case extracto");
+            mostrarSeccion('extractoBancario');
             break;
         case 'resumen':
             mostrarResumenTransacciones();
@@ -256,61 +269,75 @@ function realizarPagoServicio() {
 // Extracto y certificado
 // =============================
 function generarExtracto() {
-    if (!usuarioActual) return console.warn("Usuario no cargado.");
-    document.getElementById("reporteNombre").textContent = usuarioActual.nombre;
-    document.getElementById("reporteCuenta").textContent = usuarioActual.numeroCuenta;
-    document.getElementById("seccionReporte").classList.remove("oculto");
-
-    // Vaciar resultados anteriores
-    document.getElementById("tablaExtracto").innerHTML = "";
-}
-function filtrarTransaccionesPorFecha() {
     const anio = document.getElementById("anio").value;
     const mes = document.getElementById("mes").value;
+    const cuerpoTabla = document.getElementById("cuerpoTablaExtracto");
+    const encabezado = document.getElementById("encabezadoExtracto");
+    cuerpoTabla.innerHTML = "";
+    encabezado.innerHTML = "";
+
+    
+  
     const cedula = sessionStorage.getItem("cedula");
-
-    if (!anio || !mes) {
-        alert("Por favor, ingresa el año y el mes.");
-        return;
+  
+    if (!anio || !mes || !cedula) {
+      alert("Por favor completa todos los campos");
+      return;
     }
-
+  
     const ruta = `usuarios/${cedula}/transacciones`;
-    get(ref(database, ruta)).then(snapshot => {
-        const tbody = document.getElementById("tablaExtracto");
-        tbody.innerHTML = "";
-
-        if (!snapshot.exists()) {
-            tbody.innerHTML = "<tr><td colspan='5'>No hay transacciones.</td></tr>";
-            return;
-        }
-
-        const datos = Object.values(snapshot.val());
-        const filtrados = datos.filter(t => {
-            const fecha = new Date(t.fecha);
-            return (
-                fecha.getFullYear() === parseInt(anio) &&
-                fecha.getMonth() + 1 === parseInt(mes)
-            );
-        });
-
-        if (filtrados.length === 0) {
-            tbody.innerHTML = "<tr><td colspan='5'>No se encontraron transacciones para ese mes.</td></tr>";
-        } else {
-            filtrados.forEach(t => {
-                const fila = `
-            <tr>
-              <td>${t.fecha}</td>
-              <td>${t.referencia}</td>
-              <td>${t.tipo}</td>
-              <td>${t.descripcion}</td>
-              <td>$${t.valor}</td>
-            </tr>
+  
+    firebase.database().ref(ruta).once("value", (snapshot) => {
+      const transacciones = snapshot.val();
+  
+      if (!transacciones) {
+        cuerpoTabla.innerHTML = "<tr><td colspan='5'>No hay transacciones registradas.</td></tr>";
+        return;
+      }
+  
+      // Mostrar encabezado
+      firebase.database().ref(`usuarios/${cedula}/datos`).once("value", (snap) => {
+        const datos = snap.val();
+        if (datos) {
+          encabezado.innerHTML = `
+            <p><strong>Nombre:</strong> ${datos.nombre}</p>
+            <p><strong>Número de Cuenta:</strong> ${datos.numeroCuenta}</p>
           `;
-                tbody.innerHTML += fila;
-            });
         }
+      });
+  
+      let hayResultados = false;
+  
+      Object.values(transacciones).forEach((mov) => {
+        const fecha = mov.fecha;
+        const [añoTrans, mesTrans] = fecha.split("-");
+  
+        if (añoTrans === anio && mesTrans === mes) {
+          hayResultados = true;
+          const fila = document.createElement("tr");
+          fila.innerHTML = `
+            <td>${mov.fecha}</td>
+            <td>${mov.referencia}</td>
+            <td>${mov.tipo}</td>
+            <td>${mov.concepto}</td>
+            <td>$${mov.valor.toLocaleString()}</td>
+          `;
+          cuerpoTabla.appendChild(fila);
+        }
+      });
+  
+      if (!hayResultados) {
+        cuerpoTabla.innerHTML = "<tr><td colspan='5'>No se encontraron transacciones para ese periodo.</td></tr>";
+      }
     });
-}
+  }
+  
+  // Asigna el evento al formulario
+  document.getElementById("formularioExtracto").addEventListener("submit", function (e) {
+    e.preventDefault();
+    generarExtracto();
+  });
+  
 
 
 function mostrarCertificado() {
