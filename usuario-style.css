@@ -142,14 +142,23 @@ a:hover {
 }
 
 @media (max-width: 480px) {
+    body {
+      background-size: cover;
+      padding: 0;
+      margin: 0;
+      background-position: center top;
+    }
+
     header {
-      padding: 15px;
+      padding: 10px;
       font-size: 1rem;
     }
   
     main {
       margin: 20px 10px;
-      padding: 20px;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     }
   
     .window-cont,
@@ -158,15 +167,34 @@ a:hover {
       margin-top: 20%;
       padding: 15px;
     }
-  
+
     button {
       width: 100%;
       font-size: 0.9rem;
+      padding: 10px;
+      margin-top: 10px;
     }
   
+    .input-container input {
+      padding-right: 35px;
+      font-size: 14px;
+    }
+  
+    .input-container button {
+      width: 10vw;
+      position: absolute;
+      left: 90%;
+      top: 50%;
+      transform: translateY(-80%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
     input,
     select {
-      width: 100%;
+      width: 95%;
       font-size: 13px;
     }
   
@@ -180,6 +208,19 @@ a:hover {
     h1, h2, h3 {
       font-size: 1.2rem;
       text-align: center;
+    }
+    
+    .campo-contraseña {
+      flex-direction: row;
+      gap: 6px;
+    }
+  
+    .campo-contraseña input {
+      font-size: 13px;
+    }
+  
+    .campo-contraseña button {
+      font-size: 1rem;
     }
   }
   
