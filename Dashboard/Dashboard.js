@@ -25,10 +25,10 @@ let transacciones = [];
 // =========================
 function mostrarSeccion(id) {
     document.querySelectorAll(".contenido").forEach(seccion => {
-      seccion.classList.add("oculto");
+        seccion.classList.add("oculto");
     });
     document.getElementById(id).classList.remove("oculto");
-  }
+}
 
 // =============================
 // Elementos del DOM
@@ -50,38 +50,40 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    const usuario = JSON.parse(localStorage.getItem("usuarios")) || [];
-
-    if (!usuario) {
+    const usuarioFirebase = JSON.parse(localStorage.getItem("usuarios"));
+    if (!usuarioFirebase || usuarioFirebase.nombre !== nombreUsuario) {
         alert("Usuario no encontrado.");
         return;
     }
 
-    datosUsuario = usuario;
+    datosUsuario = usuarioFirebase;
 
     if (!datosUsuario.numeroCuenta) {
         datosUsuario.numeroCuenta = generarNumeroCuenta();
         datosUsuario.fechaCreacion = obtenerFechaHoy();
-        const index = usuarios.findIndex(u => u.nombre === nombreUsuario);
-        usuarios[index] = datosUsuario;
-        localStorage.setItem("usuarios", JSON.stringify(usuarios));
+
+        // Actualizamos Firebase
         db.ref('usuarios/' + datosUsuario.cedula + '/numeroCuenta').set(datosUsuario.numeroCuenta);
         db.ref('usuarios/' + datosUsuario.cedula + '/fechaCreacion').set(datosUsuario.fechaCreacion);
 
+        // Actualizamos también el localStorage por consistencia
+        localStorage.setItem("usuarios", JSON.stringify(datosUsuario));
     }
 
+    // Cargar datos completos desde Firebase
     db.ref("usuarios/" + datosUsuario.cedula).once("value").then(snapshot => {
         if (snapshot.exists()) {
             usuarioActual = snapshot.val();
             usuarioActual.cedula = datosUsuario.cedula;
             sessionStorage.setItem("cedula", datosUsuario.cedula);
-            mostrarDatosUsuario();
+            mostrarDatosUsuario(usuarioActual);
             mostrarResumenTransacciones();
         } else {
             alert("No se encontraron datos del usuario en Firebase.");
         }
     });
 });
+
 
 // =============================
 // Navegación
@@ -104,7 +106,7 @@ function mostrarOpcion(opcion) {
         return;
     }
 
-      
+
     ocultarSecciones();
 
     switch (opcion) {
@@ -276,68 +278,68 @@ function generarExtracto() {
     cuerpoTabla.innerHTML = "";
     encabezado.innerHTML = "";
 
-    
-  
+
+
     const cedula = sessionStorage.getItem("cedula");
-  
+
     if (!anio || !mes || !cedula) {
-      alert("Por favor completa todos los campos");
-      return;
-    }
-  
-    const ruta = `usuarios/${cedula}/transacciones`;
-  
-    firebase.database().ref(ruta).once("value", (snapshot) => {
-      const transacciones = snapshot.val();
-  
-      if (!transacciones) {
-        cuerpoTabla.innerHTML = "<tr><td colspan='5'>No hay transacciones registradas.</td></tr>";
+        alert("Por favor completa todos los campos");
         return;
-      }
-  
-      // Mostrar encabezado
-      firebase.database().ref(`usuarios/${cedula}/datos`).once("value", (snap) => {
-        const datos = snap.val();
-        if (datos) {
-          encabezado.innerHTML = `
+    }
+
+    const ruta = `usuarios/${cedula}/transacciones`;
+
+    firebase.database().ref(ruta).once("value", (snapshot) => {
+        const transacciones = snapshot.val();
+
+        if (!transacciones) {
+            cuerpoTabla.innerHTML = "<tr><td colspan='5'>No hay transacciones registradas.</td></tr>";
+            return;
+        }
+
+        // Mostrar encabezado
+        firebase.database().ref(`usuarios/${cedula}/datos`).once("value", (snap) => {
+            const datos = snap.val();
+            if (datos) {
+                encabezado.innerHTML = `
             <p><strong>Nombre:</strong> ${datos.nombre}</p>
             <p><strong>Número de Cuenta:</strong> ${datos.numeroCuenta}</p>
           `;
-        }
-      });
-  
-      let hayResultados = false;
-  
-      Object.values(transacciones).forEach((mov) => {
-        const fecha = mov.fecha;
-        const [añoTrans, mesTrans] = fecha.split("-");
-  
-        if (añoTrans === anio && mesTrans === mes) {
-          hayResultados = true;
-          const fila = document.createElement("tr");
-          fila.innerHTML = `
+            }
+        });
+
+        let hayResultados = false;
+
+        Object.values(transacciones).forEach((mov) => {
+            const fecha = mov.fecha;
+            const [añoTrans, mesTrans] = fecha.split("-");
+
+            if (añoTrans === anio && mesTrans === mes) {
+                hayResultados = true;
+                const fila = document.createElement("tr");
+                fila.innerHTML = `
             <td>${mov.fecha}</td>
             <td>${mov.referencia}</td>
             <td>${mov.tipo}</td>
             <td>${mov.concepto}</td>
             <td>$${mov.valor.toLocaleString()}</td>
           `;
-          cuerpoTabla.appendChild(fila);
+                cuerpoTabla.appendChild(fila);
+            }
+        });
+
+        if (!hayResultados) {
+            cuerpoTabla.innerHTML = "<tr><td colspan='5'>No se encontraron transacciones para ese periodo.</td></tr>";
         }
-      });
-  
-      if (!hayResultados) {
-        cuerpoTabla.innerHTML = "<tr><td colspan='5'>No se encontraron transacciones para ese periodo.</td></tr>";
-      }
     });
-  }
-  
-  // Asigna el evento al formulario
-  document.getElementById("formularioExtracto").addEventListener("submit", function (e) {
+}
+
+// Asigna el evento al formulario
+document.getElementById("formularioExtracto").addEventListener("submit", function (e) {
     e.preventDefault();
     generarExtracto();
-  });
-  
+});
+
 
 
 function mostrarCertificado() {
