@@ -46,6 +46,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnCambiarContraseña = document.getElementById("btn-cambiar-contraseña");
     const formCambiarPass = document.getElementById("form-cambiar-pass");
 
+    setInterval(cambiarFrase, 10000);
+
     btnAbrirLogin.addEventListener('click', () => {
         ventanaLogin.style.display = 'block';
         mensajeLogin.textContent = '';
@@ -93,31 +95,8 @@ document.addEventListener('DOMContentLoaded', () => {
             ) {
               mensajeLogin.style.color = "green";
               mensajeLogin.textContent = "Inicio de sesión exitoso.";
-              sessionStorage.setItem("usuario", usuario);
-      
-              const frases = [
-                "Temporada de patos... ¿otra vez? ¡No! Es temporada de ganancias explosivas en ACME Bank.",
-                "¡Dinero va! Como en los Looney Tunes, pero aquí sí puedes atraparlo.",
-                "Tus ahorros, más seguros que el Coyote comprando en ACME.",
-                "¡Boom! Tus finanzas despegan con más fuerza que una dinamita de dibujos animados.",
-                "Temporada de errores financieros... cancelada. ¡Bienvenido a ACME Bank!",
-                "Saltando más alto que Bugs Bunny… así sube tu saldo aquí.",
-                "¿Temporada de caos? No. Aquí solo temporada de control total de tu dinero.",
-                "Más confiable que cualquier invento del Coyote. Así es ACME Bank.",
-                "No necesitas una caja ACME, solo tu cuenta para lograrlo todo.",
-                "Tus finanzas corren tan rápido como el Correcaminos… ¡pero aquí no se escapan!",
-                "¿Temporada de pobreza? ¡Jamás! Aquí es temporada de progreso.",
-                "Más giros que el Taz… pero con cada vuelta, crece tu saldo.",
-                "Una cuenta tan fuerte como el martillo de Marvin el Marciano.",
-                "Aquí no caes en trampas del Coyote: cada clic te hace avanzar.",
-                "¡Es temporada de inversión! Y tus ganancias no conocen gravedad."
-              ];
-      
-              const pFrase = document.getElementById("frase-temporada");
-              if (pFrase) {
-                const aleatoria = frases[Math.floor(Math.random() * frases.length)];
-                pFrase.textContent = aleatoria;
-              }
+              sessionStorage.setItem("usuario", usuario);  
+              cambiarFrase();           
               localStorage.setItem("usuarios", JSON.stringify(usuarioFirebase));
               setTimeout(() => {
                 ventanaLogin.style.display = 'none';
@@ -144,6 +123,32 @@ document.addEventListener('DOMContentLoaded', () => {
         ventanaRegis.style.display = 'none';
         limpiarCamposRegistro();
       });
+
+      function cambiarFrase() {
+        const frases = [
+          "¿Temporada de patos... otra vez? ¡No! Es temporada de ganancias explosivas en ACME Bank.",
+          "¡Dinero va! Como en los Looney Tunes, pero aquí sí puedes atraparlo.",
+          "Tus ahorros, más seguros que el Coyote comprando en ACME.",
+          "¡Boom! Tus finanzas despegan con más fuerza que una dinamita de caricatura.",
+          "Temporada de errores financieros... cancelada. ¡Bienvenido a ACME Bank!",
+          "Saltando más alto que Bugs Bunny… así sube tu saldo aquí.",
+          "¿Temporada de caos? No. Aquí solo hay temporada de control total de tu dinero.",
+          "Más confiable que cualquier invento del Coyote. Así es ACME Bank.",
+          "No necesitas una caja ACME, solo tu cuenta para lograrlo todo.",
+          "Tus finanzas corren tan rápido como el Correcaminos… ¡pero aquí no se escapan!",
+          "¿Temporada de pobreza? ¡Jamás! Aquí es temporada de progreso.",
+          "Más giros que el Taz… pero con cada vuelta, crece tu saldo.",
+          "Una cuenta tan fuerte como el rayo desintegrador de Marvin el Marciano.",
+          "Aquí no caes en trampas del Coyote: cada clic te hace avanzar.",
+          "¡Es temporada de inversión! Y tus ganancias desafían la gravedad."
+        ];
+      
+        const pFrase = document.getElementById("frase-temporada");
+        if (pFrase) {
+          const aleatoria = frases[Math.floor(Math.random() * frases.length)];
+          pFrase.textContent = aleatoria;
+        }
+      }
     
       btnRegistrar.addEventListener('click', () => {
         const numeroCuenta = Math.floor(1000000000 + Math.random() * 9000000000).toString();
@@ -205,6 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
             sessionStorage.removeItem("usuario");
             seccionDashboard.classList.add("oculto");
             seccionInicio.classList.remove("oculto");
+            cambiarFrase();
         });
       }
 
