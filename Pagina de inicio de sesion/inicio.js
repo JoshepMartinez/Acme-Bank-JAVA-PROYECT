@@ -176,10 +176,6 @@ document.addEventListener('DOMContentLoaded', () => {
           return;
         }
     
-        const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
-        usuarios.push(nuevoUsuario);
-        localStorage.setItem('usuarios', JSON.stringify(usuarios));
-    
         db.ref('usuarios/' + nuevoUsuario.cedula).set(nuevoUsuario)
           .then(() => {
             alert("Registro exitoso.");
@@ -297,9 +293,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 ventanaRecuperar.classList.add("oculto");
                 formCambiarPass.classList.add("oculto");
                 cedulaActualRecuperar = null;
+                limpiarCamposRecuperar();
             })
             .catch(error => {
                 alert("Error al actualizar contraseña: " + error.message);
             });
         });
+        
+        function limpiarCamposRecuperar() {
+          document.getElementById("recuperar-cedula").value = '';
+          document.getElementById("recuperar-tipo").selectedIndex = 0;
+          document.getElementById("recuperar-nombre").value = '';
+          document.getElementById("nueva-contraseña").value = '';
+          formCambiarPass.classList.add("oculto");
+          cedulaActualRecuperar = null;
+        }        
 });

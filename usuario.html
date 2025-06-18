@@ -1,168 +1,143 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es"> <!-- Idioma cambiado a español -->
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ACME BANK</title>
-    <link rel="stylesheet" href="./styles/usuario-style.css">
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ACME BANK</title>
+  <link rel="stylesheet" href="./styles/usuario-style.css">
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 </head>
 <body>
-    <header>
-        <h2>Acme Bank</h2>
-    </header>
+  <header>
+    <h2>Acme Bank</h2>
+  </header>
 
-    <main>
-        <h1>Bienvenidos a Acme Bank</h1>
-        <p id="frase-temporada">emporada de patos... no, temporada de conejos... ¡no! ¡Temporada de billetes en ACME Bank! Donde tus finanzas corren más rápido que el Correcaminos.</p>
+  <main>
+    <h1>Bienvenidos a Acme Bank</h1>
+    <p id="frase-temporada">¿Temporada de patos? ¡No! ¿Temporada de conejos? ¡Tampoco! ¡Es temporada de billetes en ACME Bank! Donde tus finanzas corren más rápido que el Correcaminos.</p>
 
-        <button id="btn-iniciar-sesion">Iniciar sesión</button>
+    <button id="btn-iniciar-sesion">Iniciar sesión</button>
 
-        <div id="window" class="window">
-            <div class="window-cont">
-                <h2>Iniciar sesión</h2>
-                <p>identificacion, numero y contraseña</p>
-                <label for="usuario">Ingrese su usuario</label><br>
-                <input type="text" id="usuario" required><br><br>
+    <div id="window" class="window">
+      <div class="window-cont">
+        <h2>Iniciar sesión</h2>
+        <p>Identificación, número y contraseña</p>
 
-                <label for="tipo">Ingrese que tipo de documento tiene</label><br>
-                <select name="tipo" id="tipo">
-                <option value="TI">tarjeta de identidad</option>
-                <option value="CC">cedula de ciudadania</option>
-                <option value="CE">cedula de extranjeria</option>
-                <option value="NIT">numero de identificacion tributaria</option>
-                <option value="RC">registro civil</option>
-                </select>
-                <br><br>
+        <label for="usuario">Ingrese su usuario</label><br>
+        <input type="text" id="usuario" required><br><br>
 
-                <label for="cedula">Ingrese su numero de documento de identificacion</label><br>
-                <input type="number" id="cedula" required min="1"><br><br>
+        <label for="tipo">Seleccione su tipo de documento</label><br>
+        <select name="tipo" id="tipo">
+          <option value="TI">Tarjeta de identidad</option>
+          <option value="CC">Cédula de ciudadanía</option>
+          <option value="CE">Cédula de extranjería</option>
+          <option value="NIT">Número de identificación tributaria</option>
+          <option value="RC">Registro civil</option>
+        </select><br><br>
 
-                <label for="contraseña-login">Contraseña</label>
-                <div class="input-container">
-                    <input type="password" id="contraseña-login" required>
-                    <button type="button" id="toggle-password-login">👁️</button>
-                </div>
-                <br><br>
-                
-                <button id="btn-confirmar">Iniciar sesión</button>
-                <br><br>
-                <button id="btn-cerrar">❌</button>
-                <p id="mensaje-login"></p>
+        <label for="cedula">Ingrese su número de documento</label><br>
+        <input type="number" id="cedula" required min="1"><br><br>
 
-                <p>No tienes cuenta? <a href="#" id="link-a-registrar">Registrarse</a></p>
+        <label for="contraseña-login">Contraseña</label>
+        <div class="input-container">
+          <input type="password" id="contraseña-login" required>
+          <button type="button" id="toggle-password-login">👁️</button>
+        </div><br><br>
 
-                <p><a href="#" id="link-recuperar">¿Olvidaste tu contraseña?</a></p>
-                
-            </div>
-        </div>
+        <button id="btn-confirmar">Iniciar sesión</button><br><br>
+        <button id="btn-cerrar">❌</button>
+        <p id="mensaje-login"></p>
 
-        <button id="btn-registrarse">Registrarse</button>
+        <p>¿No tienes cuenta? <a href="#" id="link-a-registrar">Regístrate</a></p>
+        <p><a href="#" id="link-recuperar">¿Olvidaste tu contraseña?</a></p>
+      </div>
+    </div>
 
-        <div id="window-regis" class="window-regis">
-            <div class="window-regis-cont">
-              <h2>Registrarse</h2>
-      
-              <label for="tipo-regis">Ingrese que tipo de documento tiene</label>
-              <br>
+    <button id="btn-registrarse">Registrarse</button>
 
-              <select name="tipo-regis" id="tipo-regis">
-                <option value="TI">tarjeta de identidad</option>
-                <option value="CC">cedula de ciudadania</option>
-                <option value="CE">cedula de extranjeria</option>
-                <option value="NIT">numero de identificacion tributaria</option>
-                <option value="RC">registro civil</option>
-              </select>
-              <br><br>
-      
-              <label for="cedula-regis">Ingrese su numero de documento de identificacion</label>
-              <br>
-              <input type="number" id="cedula-regis" required min="1">
-              <br><br>
-      
-              <label for="usuario-regis">Ingrese sus nombres y apellidos</label>
-              <br>
-              <input type="text" id="usuario-regis">
-              <br><br>
-      
-              <label for="genero-regis">Ingrese su genero</label>
-              <br>
-              <select name="genero" id="genero-regis">
-                <option value="Helicoptero-Apache">Helicoptero Apache</option>
-                <option value="H">Hombre</option>
-                <option value="M">Mujer</option>
-                <option value="LGBTIQ+">LGTIQ+</option>
-              </select>
-              <br><br>
-      
-              <label for="telefono-regis">Ingrese su numero telefonico</label>
-              <br>
-              <input type="number" id="telefono-regis">
-              <br><br>
-      
-              <label for="correo-regis">Ingrese su correo electronico</label>
-              <br>
-              <input type="text" id="correo-regis">
-              <br><br>
-      
-              <label for="direccion-regis">Ingrese su direccion de resisdencia</label><br>
-              <input type="text" id="direccion-regis">
-              <br><br>
-      
-              <label for="ciudad-regis">Ingrese su ciudad de resisdencia</label><br>
-              <input type="text" id="ciudad-regis">
-              <br><br>
-      
-              <label for="contraseña-regis">Contraseña</label>
-                <div class="input-container">
-                  <input type="password" id="contraseña-regis" required>
-                  <button type="button" id="toggle-password-regis">👁️</button>
-                </div>
-              <br><br>
-      
-              <button id="registrarse" class="registrarse">Registrarse</button>
-              <br><br>
-      
-              <button id="btn-cerrar-registro">❌</button>
+    <div id="window-regis" class="window-regis">
+      <div class="window-regis-cont">
+        <h2>Registrarse</h2>
 
-            </div>
-        </div>
-        
-        <div id="window-recuperar" class="window-regis oculto">
-            <div class="window-regis-cont">
-              <h2>Recuperar contraseña</h2>
-          
-              <label for="recuperar-tipo">Tipo de documento</label>
-              <select id="recuperar-tipo">
-                <option value="TI">tarjeta de identidad</option>
-                <option value="CC">cedula de ciudadania</option>
-                <option value="CE">cedula de extranjeria</option>
-                <option value="NIT">numero de identificacion tributaria</option>
-                <option value="RC">registro civil</option>
-              </select>
-              <br>
-          
-              <label for="recuperar-cedula">Número de documento</label>
-              <input type="number" id="recuperar-cedula" required>
-          
-              <label for="recuperar-nombre">Nombre completo</label>
-              <input type="text" id="recuperar-nombre" required>
-          
-              <button id="btn-enviar-recuperacion">Validar identidad</button>
-          
-              <div id="form-cambiar-pass" class="oculto">
-                <label for="nueva-contraseña">Nueva contraseña</label>
-                <input type="password" id="nueva-contraseña" required>
-                <button id="btn-cambiar-contraseña">Actualizar contraseña</button>
-              </div>
-              <br>
-      
-              <button id="btn-cerrar-recuperar">❌</button>
-            </div>
-          </div> 
-    </main>
+        <label for="tipo-regis">Seleccione su tipo de documento</label><br>
+        <select name="tipo-regis" id="tipo-regis">
+          <option value="TI">Tarjeta de identidad</option>
+          <option value="CC">Cédula de ciudadanía</option>
+          <option value="CE">Cédula de extranjería</option>
+          <option value="NIT">Número de identificación tributaria</option>
+          <option value="RC">Registro civil</option>
+        </select><br><br>
 
-    <script src="./Pagina de inicio de sesion/inicio.js"></script>
+        <label for="cedula-regis">Ingrese su número de documento</label><br>
+        <input type="number" id="cedula-regis" required min="1"><br><br>
+
+        <label for="usuario-regis">Ingrese sus nombres y apellidos</label><br>
+        <input type="text" id="usuario-regis"><br><br>
+
+        <label for="genero-regis">Seleccione su género</label><br>
+        <select name="genero" id="genero-regis">
+          <option value="Helicoptero-Apache">Helicóptero Apache</option>
+          <option value="H">Hombre</option>
+          <option value="M">Mujer</option>
+          <option value="LGBTIQ+">LGBTIQ+</option>
+        </select><br><br>
+
+        <label for="telefono-regis">Ingrese su número telefónico</label><br>
+        <input type="number" id="telefono-regis"><br><br>
+
+        <label for="correo-regis">Ingrese su correo electrónico</label><br>
+        <input type="text" id="correo-regis"><br><br>
+
+        <label for="direccion-regis">Ingrese su dirección de residencia</label><br>
+        <input type="text" id="direccion-regis"><br><br>
+
+        <label for="ciudad-regis">Ingrese su ciudad de residencia</label><br>
+        <input type="text" id="ciudad-regis"><br><br>
+
+        <label for="contraseña-regis">Contraseña</label>
+        <div class="input-container">
+          <input type="password" id="contraseña-regis" required>
+          <button type="button" id="toggle-password-regis">👁️</button>
+        </div><br><br>
+
+        <button id="registrarse" class="registrarse">Registrarse</button><br><br>
+        <button id="btn-cerrar-registro">❌</button>
+      </div>
+    </div>
+
+    <div id="window-recuperar" class="window-regis oculto">
+      <div class="window-regis-cont">
+        <h2>Recuperar contraseña</h2>
+
+        <label for="recuperar-tipo">Tipo de documento</label>
+        <select id="recuperar-tipo">
+          <option value="TI">Tarjeta de identidad</option>
+          <option value="CC">Cédula de ciudadanía</option>
+          <option value="CE">Cédula de extranjería</option>
+          <option value="NIT">Número de identificación tributaria</option>
+          <option value="RC">Registro civil</option>
+        </select><br>
+
+        <label for="recuperar-cedula">Número de documento</label>
+        <input type="number" id="recuperar-cedula" required>
+
+        <label for="recuperar-nombre">Nombre completo</label>
+        <input type="text" id="recuperar-nombre" required>
+
+        <button id="btn-enviar-recuperacion">Validar identidad</button>
+
+        <div id="form-cambiar-pass" class="oculto">
+          <label for="nueva-contraseña">Nueva contraseña</label>
+          <input type="password" id="nueva-contraseña" required>
+          <button id="btn-cambiar-contraseña">Actualizar contraseña</button>
+        </div><br>
+
+        <button id="btn-cerrar-recuperar">❌</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="./Pagina de inicio de sesion/inicio.js"></script>
 </body>
 </html>
